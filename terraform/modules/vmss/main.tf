@@ -39,16 +39,16 @@ resource "azurerm_lb_probe" "this" {
 }
 
 resource "azurerm_lb_rule" "http" {
-  name                            = "http"
-  loadbalancer_id                 = azurerm_lb.this.id
-  protocol                        = "Tcp"
-  frontend_port                   = 80
-  backend_port                    = 8080
-  frontend_ip_configuration_name  = "frontend"
-  backend_address_pool_ids        = [azurerm_lb_backend_address_pool.this.id]
-  probe_id                        = azurerm_lb_probe.this.id
-  floating_ip_enabled             = false
-  idle_timeout_in_minutes         = 4
+  name                           = "http"
+  loadbalancer_id                = azurerm_lb.this.id
+  protocol                       = "Tcp"
+  frontend_port                  = 80
+  backend_port                   = 8080
+  frontend_ip_configuration_name = "frontend"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.this.id]
+  probe_id                       = azurerm_lb_probe.this.id
+  floating_ip_enabled            = false
+  idle_timeout_in_minutes        = 4
 }
 
 # VM Scale Set multi-zona. Ninguna IP publica en las NIC (S2).
@@ -59,9 +59,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = var.vm_size
   instances           = var.instance_default
   admin_username      = var.admin_username
-  upgrade_mode        = "Automatic"   # E4: reparacion automatica de instancias
+  upgrade_mode        = "Automatic" # E4: reparacion automatica de instancias
   zones               = var.zones
-  custom_data         = var.cloud_init   # D3: arranque automatico sin pasos manuales
+  custom_data         = var.cloud_init # D3: arranque automatico sin pasos manuales
   tags                = var.tags
 
   network_interface {
@@ -79,7 +79,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   # E4: reparacion automatica de instancias
   automatic_instance_repair {
-    enabled = true
+    enabled      = true
     grace_period = "PT30M"
   }
 

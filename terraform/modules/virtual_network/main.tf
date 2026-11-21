@@ -12,7 +12,7 @@ resource "azurerm_subnet" "app" {
   name                 = "snet-app"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.this.name
-  address_prefixes = ["10.0.1.0/24"]
+  address_prefixes     = ["10.0.1.0/24"]
   # S3: el service endpoint Microsoft.KeyVault se declara en el firewall del
   # Key Vault (azurerm_key_vault.network_acls.virtual_network_subnet_ids),
   # que referencia esta subred por su ID.
@@ -30,74 +30,74 @@ resource "azurerm_network_security_group" "app" {
   tags                = var.tags
 
   security_rule {
-    name                       = "AllowHealthProbe"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefixes    = ["AzureLoadBalancer"]
+    name                         = "AllowHealthProbe"
+    priority                     = 100
+    direction                    = "Inbound"
+    access                       = "Allow"
+    protocol                     = "*"
+    source_port_range            = "*"
+    destination_port_range       = "*"
+    source_address_prefixes      = ["AzureLoadBalancer"]
     destination_address_prefixes = ["*"]
   }
 
   security_rule {
-    name                       = "AllowAppInbound"
-    priority                   = 110
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "8080"
-    source_address_prefixes    = ["VirtualNetwork"]
+    name                         = "AllowAppInbound"
+    priority                     = 110
+    direction                    = "Inbound"
+    access                       = "Allow"
+    protocol                     = "Tcp"
+    source_port_range            = "*"
+    destination_port_range       = "8080"
+    source_address_prefixes      = ["VirtualNetwork"]
     destination_address_prefixes = ["*"]
   }
 
   security_rule {
-    name                       = "DenyAllInbound"
-    priority                   = 4096
-    direction                  = "Inbound"
-    access                     = "Deny"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefixes    = ["*"]
+    name                         = "DenyAllInbound"
+    priority                     = 4096
+    direction                    = "Inbound"
+    access                       = "Deny"
+    protocol                     = "*"
+    source_port_range            = "*"
+    destination_port_range       = "*"
+    source_address_prefixes      = ["*"]
     destination_address_prefixes = ["*"]
   }
 
   security_rule {
-    name                       = "AllowAzureKeyVaultOutbound"
-    priority                   = 100
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "443"
-    source_address_prefixes    = ["*"]
+    name                         = "AllowAzureKeyVaultOutbound"
+    priority                     = 100
+    direction                    = "Outbound"
+    access                       = "Allow"
+    protocol                     = "Tcp"
+    source_port_range            = "*"
+    destination_port_range       = "443"
+    source_address_prefixes      = ["*"]
     destination_address_prefixes = ["AzureKeyVault"]
   }
 
   security_rule {
-    name                       = "AllowIMDSOutbound"
-    priority                   = 110
-    direction                  = "Outbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefixes    = ["*"]
+    name                         = "AllowIMDSOutbound"
+    priority                     = 110
+    direction                    = "Outbound"
+    access                       = "Allow"
+    protocol                     = "Tcp"
+    source_port_range            = "*"
+    destination_port_range       = "80"
+    source_address_prefixes      = ["*"]
     destination_address_prefixes = ["169.254.169.254"]
   }
 
   security_rule {
-    name                       = "DenyAllOutbound"
-    priority                   = 4096
-    direction                  = "Outbound"
-    access                     = "Deny"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefixes    = ["*"]
+    name                         = "DenyAllOutbound"
+    priority                     = 4096
+    direction                    = "Outbound"
+    access                       = "Deny"
+    protocol                     = "*"
+    source_port_range            = "*"
+    destination_port_range       = "*"
+    source_address_prefixes      = ["*"]
     destination_address_prefixes = ["*"]
   }
 }

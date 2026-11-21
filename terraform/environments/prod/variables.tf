@@ -110,7 +110,7 @@ variable "secret_name" {
 variable "common_tags" {
   description = "Etiquetas aplicadas a todos los recursos."
   type        = map(string)
-  default     = {
+  default = {
     project = "caribeshop"
     env     = "prod"
   }

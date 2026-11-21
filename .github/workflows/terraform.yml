@@ -89,11 +89,10 @@ jobs:
             --name tfstate --auth-mode login >/dev/null || true
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE }}"
         working-directory: ${{ env.TF_ROOT }}
         env:
           TF_VAR_state_resource_group: ${{ secrets.TF_STATE_RG }}
-          TF_VAR_state_storage_account: ${{ secrets.TF_STATE_STORAGE }}
           TF_VAR_state_container: tfstate
 
       - name: Terraform Plan

@@ -17,13 +17,13 @@ resource "azurerm_policy_definition" "deny_nic_public_ip" {
   description  = "Deniega la creacion de interfaces de red con IP publica."
   mode         = "Indexed"
   metadata     = jsonencode({ category = "Network" })
-  policy_rule  = jsonencode({
+  policy_rule = jsonencode({
     "if" = {
       "allOf" = [
         { "field" = "type", "equals" = "Microsoft.Network/networkInterfaces" },
         {
-          "field" = "Microsoft.Network/networkInterfaces/ipConfigurations[*].publicIpAddress.id",
-          "exists"  = true
+          "field"  = "Microsoft.Network/networkInterfaces/ipConfigurations[*].publicIpAddress.id",
+          "exists" = true
         }
       ]
     },
@@ -48,7 +48,7 @@ resource "azurerm_monitor_action_group" "alert_email" {
   location            = "global"
 
   email_receiver {
-    name        = "operador"
+    name          = "operador"
     email_address = var.alert_email
   }
 }
