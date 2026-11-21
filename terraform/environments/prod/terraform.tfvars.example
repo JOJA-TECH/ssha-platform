@@ -1,0 +1,27 @@
+# Copia este archivo a terraform.tfvals y rellena los valores requeridos.
+# Nunca subas terraform.tfvals con datos reales (see .gitignore).
+
+location           = "eastus"
+resource_group_name = "rg-caribeshop-prod"
+project_name        = "caribeshop"
+
+# Estado remoto (backend azurerm): crear con scripts/bootstrap-backend.sh
+state_resource_group = "rg-tfstate"
+state_storage_account = "<tfstate-cuenta-almacenamiento>"
+state_container      = "tfstate"
+
+vm_size       = "Standard_B2s"
+admin_username = "azureuser"
+ssh_public_key  = "<contenido-de-id_rsa.pub>"
+
+instance_min = 2
+instance_max = 4
+instance_default = 2
+
+# IP publica del operador (permitida en firewall de Key Vault)
+operator_ip = "<IP-publica-del-operador>"
+
+alert_email = "<correo-de-alerta>"
+
+key_vault_name = "<key-vault-globalmente-unico>"
+secret_name    = "app-secret"
