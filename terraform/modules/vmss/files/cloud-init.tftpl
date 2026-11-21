@@ -1,0 +1,42 @@
+#cloud-config
+package_update: true
+
+packages:
+  - python3
+
+write_files:
+  - path: /opt/caribeshop/app.py
+    permissions: "0755"
+    owner: "azureuser:azureuser"
+    content: |
+      ${app_script}
+  - path: /etc/default/caribeshop
+    permissions: "0644"
+    owner: "azureuser:azureuser"
+    content: |
+      KEY_VAULT_URI=${key_vault_uri}
+      SECRET_NAME=${secret_name}
+  - path: /etc/systemd/system/caribeshop.service
+    permissions: "0644"
+    owner: "root:root"
+    content: |
+      [Unit]
+      Description=CaribeShop app
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=azureuser
+      EnvironmentFile=-/etc/default/caribeshop
+      WorkingDirectory=/opt/caribeshop
+      ExecStart=/usr/bin/python3 /opt/caribeshop/app.py
+      Restart=always
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - systemctl daemon-reload
+  - systemctl enable caribeshop.service
+  - systemctl start caribeshop.service

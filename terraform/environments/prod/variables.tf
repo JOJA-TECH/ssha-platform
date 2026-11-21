@@ -74,6 +74,23 @@ variable "operator_ip" {
   type        = string
 }
 
+variable "zones" {
+  description = "Zonas de disponibilidad del VMSS (E1)."
+  type        = list(string)
+  default     = ["1", "2", "3"]
+}
+
+variable "secret_value" {
+  description = "Valor del secreto de la app (sensible; solo en tfvars/secrets)."
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_expiration_date" {
+  description = "Fecha de expiracion del secreto (S3)."
+  type        = string
+}
+
 variable "alert_email" {
   description = "Correo de notificacion de alertas de Azure Monitor."
   type        = string

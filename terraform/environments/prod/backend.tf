@@ -1,8 +1,8 @@
 terraform {
   backend "azurerm" {
-    resource_group_name  = var.state_resource_group
-    storage_account_name = var.state_storage_account
-    container_name       = var.state_container
+    resource_group_name  = "rg-tfstate-caribeshop"
+    storage_account_name = "tfstatecaribeshop"  # sobrescribir con -backend-config (nombre unico global)
+    container_name       = "tfstate"
     key                  = "caribeshop/prod/terraform.tfstate"
   }
 }
