@@ -28,6 +28,7 @@ resource "azurerm_key_vault_secret" "app" {
   key_vault_id    = azurerm_key_vault.this.id
   value           = var.secret_value
   expiration_date = var.secret_expiration_date
+  content_type    = "text/plain"
 }
 
 # S6: diagnostic settings del Key Vault hacia Log Analytics.
