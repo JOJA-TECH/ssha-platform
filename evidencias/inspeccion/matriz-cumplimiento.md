@@ -24,7 +24,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 |----|--------|-----------|---------------|
 | **E1** | cumple | VMSS en zonas `[1,2]`, 2 instancias; zona confirmada por IMDS en cada una (1 y 2) | `D2as_v4` (2 vCPU) con cuota regional de 4 vCPU: no caben más instancias. |
 | **E2** | cumple | Sonda HTTP `/health:8080` en el LB; `/health` → 200 tanto local como por LB; P2.1 demuestra que una sonda 503 retira la instancia del balanceo | No se capturó por separado la métrica `Health Probe Status`. |
-| **E3** | parcial | Autoscale desplegado y verificado: CPU >70 % / <30 %, cooldowns 10/15 min, `ignore_changes = [instances]` | **No hay scale-out/in automático observado**: `instance_max = 2` por cuota y la API `runHistory` responde `Unrecognized operationName: runHistory`. Sólo escalado manual 1→2 en P1.1. |
+| **E3** | cumple | Código con histeresis (70/30) y cooldowns 10/15 min; Activity Log: `ScaledownResult` 2→1 (18:22:08Z) y `ScaleupResult` 1→2 (18:27:49Z) ejecutados por `Microsoft.Insights/autoscaleSettings`; correo de notificación recibido | Detalle en `../azure/autoscale-eventos.md`. Las acciones fueron por cambio controlado del perfil en P1.1, no por umbral de CPU: con `instance_max = 2` no cabe `+2`. La API `runHistory` sigue disponible sólo como Activity Log. |
 | **E4** | parcial | `automatic_instance_repair { enabled = true, grace_period = "PT30M" }` y `rolling_upgrade_policy` declarada en código | No se presenció reemplazo automático: en P2.2 la instancia apagada se reinició manualmente. |
 | **E5** | parcial | Alerta de métrica CPU >80 %/5 min + action group con correo desplegados | No hay correo recibido ni historial de alertas capturado durante el lab. |
 
@@ -42,7 +42,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 |----|--------|-----------|
 | **P1.1** | cumple | 1 instancia: 700 peticiones, 186 fallos (26,6 %), p95 ~136 s, ~2,36 RPS. |
 | **P1.2** | cumple | Perfil 25 min: 26.022 peticiones, 11 fallos (0,04 %), 17,43 RPS, p95 2,3 s; CSV + HTML guardados. |
-| **P1.3** | no verificable | Sin scale-out/in por cuota (max = 2) y sin historial del autoscale; ver E3. |
+| **P1.3** | cumple | Línea de tiempo alineada: scale-in 2→1 y scale-out 1→2 del autoscale frente a RPS/p95 de P1.1 (`../p1/escalamiento-linea-tiempo.md`) | Los cambios fueron por el perfil 1/1 → 2/2/2, no por CPU (cuota máxima 2). Se entrega tabla alineada en vez de imagen de gráfico. |
 | **P2.1** | cumple | Falla lógica (`/health` → 503): 1.001 peticiones, 0 fallos. |
 | **P2.2** | cumple | Instancia apagada: 1.067 peticiones, 0 fallos; recuperada manualmente. |
 | **P3.1** | cumple | Sin IP autorizada: `ForbiddenByFirewall`; restaurada la regla, lectura OK. |
