@@ -14,6 +14,6 @@ Se ejecutan `terraform fmt -check -recursive`, `terraform init -backend=false`, 
 |-----|-----------|-----------|
 | `45060950067` | PR con la configuración final | `terraform: pass` (23 s), `apply: skipping` |
 | `45061031462` | PR con hallazgo introducido a propósito (se quitó `content_type` del secreto) | `terraform: fail` (24 s) — Checkov `17 passed, 1 failed (CKV_AZURE_114), 2 skipped`; fmt/validate pasaron |
-| Run following | Hallazgo corregido (`content_type = "text/plain"`) | `terraform: pass` |
+| `45061136940` | Hallazgo corregido (`content_type = "text/plain"`) | `terraform: pass` (22 s), `apply: skipping` |
 
 Conclusión: el pipeline bloquea un hallazgo de seguridad real y vuelve a pasar al corregirlo; D1 queda verificado en ejecución.
