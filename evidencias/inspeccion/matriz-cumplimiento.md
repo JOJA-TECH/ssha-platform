@@ -32,7 +32,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 
 | ID | Estado | Evidencia | Observaciones |
 |----|--------|-----------|---------------|
-| **D1** | parcial | Workflow en cada PR con `fmt -check`, `validate`, `plan` y Checkov bloqueante; comprobaciones locales ejecutadas | Sin secretos de GitHub, 0 PRs, 1 run skippeado; Checkov no está instalado localmente. No hay ejecución de pipeline verificable. |
+| **D1** | cumple | PR #1: run `45060950067` pass; run `45061031462` **fail** por `CKV_AZURE_114` introducido a propósito; run `45061136940` pass tras corregirlo; push a main `45060911774` skipped (sin apply automático) | Detalle en `verificacion-ci.md`. El workflow de PR no depende de secrets; Checkov es bloqueante. |
 | **D2** | cumple | Checkov 3.4.6 sobre `terraform/environments/prod`: **18 passed, 0 failed, 2 skipped**; ambos skips llevan justificación en código | Tabla de riesgos aceptados más abajo. El hallazgo `CKV_AZURE_114` se corrigió de verdad (`content_type = "text/plain"`), no se omitió. |
 | **D3** | cumple | cloud-init corregido (YAML validado: 3 `write_files`, 3 `runcmd`) y aplicado; app activa en las 2 instancias tras el arranque, sin pasos manuales | Se eliminaron `owner:` (el usuario no existe aún en `write_files`) y `package_update` (egreso cerrado). `indent()` no indenta la primera línea: se añadieron 6 espacios explícitos en la plantilla. |
 
@@ -55,7 +55,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 |----------|--------|-------------|
 | Código Terraform modular + app + locustfile + workflow | cumple | `locustfile.py` corregido: `StagesShape` no existe en Locust; implementado con `LoadTestShape`. |
 | `evidencias/` | cumple | Inspección, preflight, terraform, azure, P1, P2, P3 y resumen final. |
-| Dos PRs cerrados (hallazgo + corrección) | no cumple | `gh pr list --state all` → 0 PRs. Requisito del taller no demostrable. |
+| Dos PRs cerrados (hallazgo + corrección) | parcial | PR #1 fusionado con fallo por Checkov y corrección; el taller pide dos PRs, sólo hay uno. |
 | Informe PDF (≤ 12 págs.) y video 6–8 min | no verificable | Entregables grupales posteriores; fuera de este lab. |
 
 ## Riesgos aceptados (D2)

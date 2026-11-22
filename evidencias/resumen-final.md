@@ -12,8 +12,8 @@ Todo lo que sigue está sanitizado (sin secretos, tokens ni contenido del estado
 
 1. **P1.3 / E3 incompleto**: cuota de 4 vCPU impide `instance_max > 2`, por lo que no hubo scale-out/in por CPU; la API de historial del autoscale no está disponible (`Unrecognized operationName: runHistory`).
 2. **E4 / E5**: reparación automática y alerta por correo configuradas, sin evento observado durante el lab.
-3. **D1 parcial**: sin secretos de GitHub ni PRs; Checkov no ejecutado localmente.
-4. **No se crearon commits, push ni PRs**; todos los cambios siguen locales.
+3. **D1 verificado** en PR #1 (fallo por Checkov introducido a propósito + corrección; ver `inspeccion/verificacion-ci.md`), aunque el taller pide dos PRs y sólo hay uno.
+4. Ya hay commits, push y un PR fusionado; el laboratorio de Azure sigue desplegado.
 
 ## Estado operativo
 
