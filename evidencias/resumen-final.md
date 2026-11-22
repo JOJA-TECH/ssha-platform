@@ -11,7 +11,7 @@ Todo lo que sigue está sanitizado (sin secretos, tokens ni contenido del estado
 ## Limitaciones que deben declararse en el informe
 
 1. **E3 / P1.3 demostrados**: el Activity Log registra scale-in 2→1 y scale-out 1→2 ejecutados por el autoscale y se recibió el correo de notificación (`azure/autoscale-eventos.md`, `p1/escalamiento-linea-tiempo.md`). No obstante, la cuota de 4 vCPU fija `instance_max = 2`, así que **no se disparó un scale-out por la regla de CPU**; las acciones fueron por el cambio controlado del perfil en P1.1.
-2. **E4 / E5 siguen sin evidencia empírica**: reparación automática y alerta de métrica por correo configuradas, sin evento observado (el correo recibido es de autoscale, no de la alerta `cpu-sostenido-vmss`).
+2. **E4 sigue sin evidencia empírica**: reparación automática configurada, sin reemplazo observado. **E5 cumplido**: la alerta `cpu-sostenido-vmss` disparó `Fired` a las 20:09:52Z con CPU ~99,7 % sostenida (`azure/e5-alerta-cpu.md`); el correo recibido antes era de autoscale, no de esta alerta.
 3. **D1 verificado** en PR #1 (fallo por Checkov introducido a propósito + corrección; ver `inspeccion/verificacion-ci.md`). PR #2 también fusionado, quedando cubierto el requisito de dos PRs.
 4. Ya hay commits, push y un PR fusionado; el laboratorio de Azure sigue desplegado.
 

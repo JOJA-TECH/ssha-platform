@@ -26,7 +26,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 | **E2** | cumple | Sonda HTTP `/health:8080` en el LB; `/health` → 200 tanto local como por LB; P2.1 demuestra que una sonda 503 retira la instancia del balanceo | No se capturó por separado la métrica `Health Probe Status`. |
 | **E3** | cumple | Código con histeresis (70/30) y cooldowns 10/15 min; Activity Log: `ScaledownResult` 2→1 (18:22:08Z) y `ScaleupResult` 1→2 (18:27:49Z) ejecutados por `Microsoft.Insights/autoscaleSettings`; correo de notificación recibido | Detalle en `../azure/autoscale-eventos.md`. Las acciones fueron por cambio controlado del perfil en P1.1, no por umbral de CPU: con `instance_max = 2` no cabe `+2`. La API `runHistory` sigue disponible sólo como Activity Log. |
 | **E4** | parcial | `automatic_instance_repair { enabled = true, grace_period = "PT30M" }` y `rolling_upgrade_policy` declarada en código | No se presenció reemplazo automático: en P2.2 la instancia apagada se reinició manualmente. |
-| **E5** | parcial | Alerta de métrica CPU >80 %/5 min + action group con correo desplegados | No hay correo recibido ni historial de alertas capturado durante el lab. |
+| **E5** | cumple | Regla `cpu-sostenido-vmss` (CPU >80 % en PT5M, Sev2) disparó `Fired` a las 20:09:52Z con CPU ~99,7 % sostenida; action group con correo `j***@utb.edu.co` habilitado; carga limitada y retirada (`azure/e5-alerta-cpu.md`) | La alerta se confirma vía API `Microsoft.AlertsManagement/alerts`. `autoMitigate` activo. |
 
 ## DevSecOps
 
