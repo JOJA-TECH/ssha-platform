@@ -1,0 +1,32 @@
+{
+  "value": [
+    {
+      "id": "/subscriptions/SUSCRIPCION-ENMASCARADA/resourcegroups/rg-caribeshop-prod/providers/microsoft.compute/virtualmachinescalesets/caribeshop-vmss/providers/Microsoft.AlertsManagement/alerts/4d230e72-4052-4cb1-99ba-620b064cf000",
+      "name": "cpu-sostenido-vmss",
+      "properties": {
+        "essentials": {
+          "actionStatus": {
+            "isSuppressed": false
+          },
+          "alertRule": "/subscriptions/SUSCRIPCION-ENMASCARADA/resourceGroups/rg-caribeshop-prod/providers/Microsoft.Insights/metricAlerts/cpu-sostenido-vmss",
+          "alertState": "New",
+          "description": "CPU sostenida alta en el VMSS (E5)",
+          "lastModifiedDateTime": "2026-11-22T20:22:44.7913664Z",
+          "lastModifiedUserName": "System",
+          "monitorCondition": "Resolved",
+          "monitorConditionResolvedDateTime": "2026-11-22T20:22:45.4736283Z",
+          "monitorService": "Platform",
+          "severity": "Sev2",
+          "signalType": "Metric",
+          "sourceCreatedId": "SUSCRIPCION-ENMASCARADA_rg-caribeshop-prod_Microsoft.Insights_metricAlerts_cpu-sostenido-vmss_-486074025",
+          "startDateTime": "2026-11-22T20:09:52.989867Z",
+          "targetResource": "/subscriptions/SUSCRIPCION-ENMASCARADA/resourcegroups/rg-caribeshop-prod/providers/microsoft.compute/virtualmachinescalesets/caribeshop-vmss",
+          "targetResourceGroup": "rg-caribeshop-prod",
+          "targetResourceName": "caribeshop-vmss",
+          "targetResourceType": "virtualmachinescalesets"
+        }
+      },
+      "type": "microsoft.alertsmanagement/alerts"
+    }
+  ]
+}
