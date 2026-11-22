@@ -55,7 +55,7 @@ Fuentes: código Terraform/workflows, comandos de Azure CLI, Locust (CSV/HTML) y
 |----------|--------|-------------|
 | Código Terraform modular + app + locustfile + workflow | cumple | `locustfile.py` corregido: `StagesShape` no existe en Locust; implementado con `LoadTestShape`. |
 | `evidencias/` | cumple | Inspección, preflight, terraform, azure, P1, P2, P3 y resumen final. |
-| Dos PRs cerrados (hallazgo + corrección) | parcial | PR #1 fusionado con fallo por Checkov y corrección; el taller pide dos PRs, sólo hay uno. |
+| Dos PRs cerrados (hallazgo + corrección) | cumple | PR #1 (fallo por Checkov + corrección) y PR #2 (evidencia de autoscale) fusionados. |
 | Informe PDF (≤ 12 págs.) y video 6–8 min | no verificable | Entregables grupales posteriores; fuera de este lab. |
 
 ## Riesgos aceptados (D2)
