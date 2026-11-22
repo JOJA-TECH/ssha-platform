@@ -1,0 +1,12 @@
+// S6: lecturas del secreto desde el workspace de Log Analytics del lab.
+// Ejecutar: az monitor log-analytics query -w <workspace-id> --analytics-query "$(cat evidencias/azure/kql-kv-audit.kql)"
+AzureDiagnostics
+| where ResourceType == "VAULTS" and OperationName == "SecretGet"
+| extend tipo_identidad = identity_claim_idtyp_s,
+         ip_origen = CallerIPAddress,
+         oid = identity_claim_oid_g,
+         resultado = ResultSignature,
+         cliente = clientInfo_s
+| project TimeGenerated, tipo_identidad, ip_origen, oid, resultado, cliente
+| order by TimeGenerated desc
+| take 30

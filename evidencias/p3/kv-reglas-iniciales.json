@@ -1,0 +1,16 @@
+{
+  "bypass": "AzureServices",
+  "defaultAction": "Deny",
+  "ipRules": [
+    {
+      "value": "138.121.12.***/32"
+    }
+  ],
+  "virtualNetworkRules": [
+    {
+      "id": "/subscriptions/9490c340-…-0fa8ad71c767/resourcegroups/rg-caribeshop-prod/providers/microsoft.network/virtualnetworks/caribeshop-vnet/subnets/snet-app",
+      "ignoreMissingVnetServiceEndpoint": null,
+      "resourceGroup": "rg-caribeshop-prod"
+    }
+  ]
+}

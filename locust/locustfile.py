@@ -6,7 +6,7 @@ evidencias/p1 --html evidencias/p1/reporte.html
 
 Los umbrales y tiempos son parametros de entrada del escenario, no del codigo.
 """
-from locust import HttpUser, between, task, StagesShape
+from locust import HttpUser, LoadTestShape, between, task
 
 USERS_RAMP = 50          # usuarios maximos en la meseta
 RAMP_UP = "5m"           # subida
@@ -32,8 +32,15 @@ class CaribeShopUser(HttpUser):
         self.client.get("/secret")
 
 
-class StagedLoad(StagesShape):
+class StagedLoad(LoadTestShape):
     """Subida lineal, meseta, bajada lineal (perfil escalonado P1.2)."""
+
+    def tick(self):
+        elapsed = self.get_run_time()
+        for stage in self.stages():
+            if elapsed < stage["duration"]:
+                return stage["users"], stage["spawn_rate"]
+        return None
 
     def stages(self):
         total_ramp = self._parse(RAMP_UP)

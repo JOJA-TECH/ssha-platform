@@ -1,0 +1,8 @@
+Enable succeeded: 
+[stdout]
+INTERNET=000BLOQUEADO
+IMDS=200
+KV_APP=200
+
+[stderr]
+

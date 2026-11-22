@@ -53,15 +53,17 @@ resource "azurerm_lb_rule" "http" {
 
 # VM Scale Set multi-zona. Ninguna IP publica en las NIC (S2).
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
+  #checkov:skip=CKV_AZURE_97: cifrado en host no requerido en lab sin datos sensibles locales; discos cifrados en reposo por Azure (riesgo aceptado)
   name                = "${var.project_name}-vmss"
   location            = var.location
   resource_group_name = var.resource_group_name
   sku                 = var.vm_size
   instances           = var.instance_default
+  health_probe_id     = azurerm_lb_probe.this.id # E4: requerido por automatic_instance_repair
   admin_username      = var.admin_username
   upgrade_mode        = "Automatic" # E4: reparacion automatica de instancias
   zones               = var.zones
-  custom_data         = var.cloud_init # D3: arranque automatico sin pasos manuales
+  custom_data         = base64encode(var.cloud_init) # D3: arranque automatico sin pasos manuales
   tags                = var.tags
 
   network_interface {
@@ -81,6 +83,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   automatic_instance_repair {
     enabled      = true
     grace_period = "PT30M"
+  }
+
+  # Azure inyecta estos valores por defecto; declararlos evita un diff perpetuo.
+  rolling_upgrade_policy {
+    cross_zone_upgrades_enabled             = false
+    max_batch_instance_percent              = 20
+    max_unhealthy_instance_percent          = 20
+    max_unhealthy_upgraded_instance_percent = 20
+    maximum_surge_instances_enabled         = false
+    pause_time_between_batches              = "PT0S"
+    prioritize_unhealthy_instances_enabled  = false
   }
 
   automatic_os_upgrade_policy {
@@ -120,7 +133,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
 # D3: cloud-init renderizado con los valores del entorno (arranque automatico).
 locals {
-  app_script = file("${path.module}/files/app.py")
+  app_script = indent(6, file("${path.module}/files/app.py"))
   cloud_init = templatefile("${path.module}/files/cloud-init.tftpl", {
     key_vault_uri = var.key_vault_uri
     secret_name   = var.secret_name

@@ -13,6 +13,11 @@ variable "project_name" {
   type        = string
 }
 
+variable "operator_ip" {
+  description = "CIDR del operador, unico origen externo autorizado a la app (8080)."
+  type        = string
+}
+
 variable "tags" {
   description = "Etiquetas comunes."
   type        = map(string)

@@ -1,4 +1,5 @@
 resource "azurerm_key_vault" "this" {
+  #checkov:skip=CKV2_AZURE_32: S3 exige firewall por service endpoint + IP del operador; private endpoint cambiaria el diseno del lab (riesgo aceptado)
   name                          = var.key_vault_name
   location                      = var.location
   resource_group_name           = var.resource_group_name
@@ -8,7 +9,7 @@ resource "azurerm_key_vault" "this" {
   sku_name                      = "standard"
   purge_protection_enabled      = true # S3: protección contra purgado
   soft_delete_retention_days    = 90   # S3: soft delete
-  public_network_access_enabled = false
+  public_network_access_enabled = true # firewall (network_acls) restringe el acceso a subred + IP del operador
 
   tags = var.tags
 
@@ -27,6 +28,7 @@ resource "azurerm_key_vault_secret" "app" {
   key_vault_id    = azurerm_key_vault.this.id
   value           = var.secret_value
   expiration_date = var.secret_expiration_date
+  content_type    = "text/plain"
 }
 
 # S6: diagnostic settings del Key Vault hacia Log Analytics.

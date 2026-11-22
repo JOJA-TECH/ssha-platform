@@ -1,0 +1,12 @@
+ERROR: (Forbidden) Client address is not authorized and caller is not a trusted service.
+Client address: 138.121.12.***
+Caller: appid=04b07795-8ddb-461a-bbee-02f9e1bf7b46;oid=86e3e4c1-…-36b81692d865;iss=https://sts.windows.net/25f92c31-…-1442bfbadaa6/
+Vault: kv-cshop-sub1-********;location=eastus
+Code: Forbidden
+Message: Client address is not authorized and caller is not a trusted service.
+Client address: 138.121.12.***
+Caller: appid=04b07795-8ddb-461a-bbee-02f9e1bf7b46;oid=86e3e4c1-…-36b81692d865;iss=https://sts.windows.net/25f92c31-…-1442bfbadaa6/
+Vault: kv-cshop-sub1-********;location=eastus
+Inner error: {
+    "code": "ForbiddenByFirewall"
+}

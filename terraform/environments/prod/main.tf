@@ -14,6 +14,7 @@ module "virtual_network" {
   location            = var.location
   resource_group_name = var.resource_group_name
   project_name        = var.project_name
+  operator_ip         = var.operator_ip
   tags                = local.common_tags
 }
 
